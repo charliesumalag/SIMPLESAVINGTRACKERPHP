@@ -1,3 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
 *, ::before, ::after {
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
@@ -691,6 +697,14 @@ video {
   border-radius: 2rem;
 }
 
+.rounded-\[\] {
+  border-radius: ;
+}
+
+.rounded-\[1rem\] {
+  border-radius: 1rem;
+}
+
 .border {
   border-width: 1px;
 }
@@ -701,6 +715,10 @@ video {
 
 .border-0 {
   border-width: 0px;
+}
+
+.border-\[1px\] {
+  border-width: 1px;
 }
 
 .border-gray-300 {
@@ -791,6 +809,26 @@ video {
   padding: 1rem 1rem;
 }
 
+.p-\[1\.1re\] {
+  padding: 1.1re;
+}
+
+.p-\[1\.1rem\] {
+  padding: 1.1rem;
+}
+
+.p-\[0\.9rem\] {
+  padding: 0.9rem;
+}
+
+.p-\[0\.9\] {
+  padding: 0.9;
+}
+
+.p-\[1r\] {
+  padding: 1r;
+}
+
 .px-\[\] {
   padding-left: ;
   padding-right: ;
@@ -799,6 +837,14 @@ video {
 .px-\[2rem\] {
   padding-left: 2rem;
   padding-right: 2rem;
+}
+
+.pl-\[\] {
+  padding-left: ;
+}
+
+.pl-\[4\.2rem\] {
+  padding-left: 4.2rem;
 }
 
 .text-center {
@@ -854,6 +900,11 @@ video {
   color: rgb(40 146 69 / var(--tw-text-opacity, 1));
 }
 
+.text-\[\#777\] {
+  --tw-text-opacity: 1;
+  color: rgb(119 119 119 / var(--tw-text-opacity, 1));
+}
+
 .underline {
   text-decoration-line: underline;
 }
@@ -861,6 +912,14 @@ video {
 .outline-none {
   outline: 2px solid transparent;
   outline-offset: 2px;
+}
+
+.outline {
+  outline-style: solid;
+}
+
+.outline-0 {
+  outline-width: 0px;
 }
 
 /* FONT FAMILY IMPORT */
@@ -953,4 +1012,9 @@ input{
 .before\:content-\[\'\'\]::before {
   --tw-content: '';
   content: var(--tw-content);
+}
+
+.error{
+  color: red;
+  padding-left: 1rem;
 }

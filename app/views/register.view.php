@@ -5,25 +5,56 @@
             <h1 class="relative z-[2] text-white text-center text-[3rem]">Rider Savings Tracker</h1>
         </div>
     </header>
-    <form action="" class="mt-[2rem] p-[1rem] flex flex-col gap-[2rem]" autocomplete="off">
+    <?php
+
+
+    ?>
+    <form action="/auth/register" method="POST" class="mt-[2rem] p-[1rem] flex flex-col gap-[2rem]" autocomplete="off">
         <div class="w-full relative">
             <i class="fa-solid fa-user absolute text-[#999] top-[50%] left-[1.4rem] -translate-y-1/2"></i>
-            <input class="w-full p-[1rem_3.6rem] outline-none rounded-[2rem] border-[0.5px] border-[#999] text-[#999] font-inherit bg-transparent" type="text" placeholder="First Name" autocomplete="off" autocorrect="off" autocapitalize="off">
+            <input name="firstname" class="w-full p-[0.9rem] outline-0 border-[1px] border-[#999] rounded-[1rem] text-[#777] pl-[4.2rem]" type="text" placeholder="First Name" value="<?= $user['firstname'] ?? '' ?>" autocomplete="off" autocorrect="off" autocapitalize="off">
+
         </div>
+        <?php if (isset($errors['firstname'])): ?>
+            <p class="error text-sm"><?= htmlspecialchars($errors['firstname']) ?></p>
+        <?php endif; ?>
         <div class="w-full relative">
             <i class="fa-solid fa-user absolute text-[#999] top-[50%] left-[1.4rem] -translate-y-1/2"></i>
-            <input class="w-full p-[1rem_3.6rem] outline-none rounded-[2rem] border-[0.5px] border-[#999] text-[#999] font-inherit bg-transparent" type="text" placeholder="Last Name" autocomplete="off" autocorrect="off" autocapitalize="off">
+            <input name="lastname" class="w-full p-[0.9rem] outline-0 border-[1px] border-[#999] rounded-[1rem] text-[#777] pl-[4.2rem]" type="text" value="<?= $user['lastname'] ?? '' ?>" placeholder="Last Name" autocomplete="off" autocorrect="off" autocapitalize="off">
         </div>
+        <?php if (isset($errors['lastname'])): ?>
+            <p class="error text-sm"><?= htmlspecialchars($errors['lastname']) ?></p>
+        <?php endif; ?>
         <div class="w-full relative">
             <i class="fa-solid fa-envelope absolute text-[#999] top-[50%] left-[1.4rem] -translate-y-1/2"></i>
-            <input class="w-full p-[1rem_3.6rem] outline-none rounded-[2rem] border-[0.5px] border-[#999] text-[#999] font-inherit bg-transparent" type="text" placeholder="Email" autocomplete="off" autocorrect="off" autocapitalize="off">
+            <input name="email" class="w-full p-[0.9rem] outline-0 border-[1px] border-[#999] rounded-[1rem] text-[#777] pl-[4.2rem]" value="<?= $user['email'] ?? '' ?>" type="email" placeholder="Email" autocomplete="off" autocorrect="off" autocapitalize="off">
+
         </div>
+
         <div class="w-full relative">
             <i class="fa-solid fa-lock absolute text-[#999] top-[50%] left-[1.4rem] -translate-y-1/2"></i>
-            <input class="w-full p-[1rem_3.6rem] outline-none rounded-[2rem] border-[0.5px] border-[#999] text-[#999] font-inherit bg-transparent" type="password" placeholder="Password" autocomplete="new-password" autocorrect="off" autocapitalize="off">
+            <input name="password" class="w-full p-[0.9rem] outline-0 border-[1px] border-[#999] rounded-[1rem] text-[#777] pl-[4.2rem]" type="password" placeholder="Password" autocomplete="new-password" autocorrect="off" autocapitalize="off">
+
+
         </div>
+
+        <div class="w-full relative">
+            <i class="fa-solid fa-lock absolute text-[#999] top-[50%] left-[1.4rem] -translate-y-1/2"></i>
+            <input class="w-full p-[0.9rem] outline-0 border-[1px] border-[#999] rounded-[1rem] text-[#777] pl-[4.2rem]" name="cpassword" type="password" placeholder="Password" autocomplete="new-password" autocorrect="off" autocapitalize="off">
+
+        </div>
+        <?php if (isset($errors['password'])): ?>
+            <p class="error"><?= htmlspecialchars($errors['password']) ?></p>
+        <?php endif; ?>
+        <?php if (isset($errors['password_confirmation'])): ?>
+            <p class="error"><?= htmlspecialchars($errors['password_confirmation']) ?></p>
+        <?php endif; ?>
+
+        <?php if (isset($errors['email'])): ?>
+            <p class="error text-sm"><?= htmlspecialchars($errors['email']) ?></p>
+        <?php endif; ?>
         <div class="w-full relativer">
-            <button class="w-full p-[1rem_1rem] rounded-[2rem] bg-[#289245] border-0 text-white text-[1.6rem] font-inherit">Register</button>
+            <button type="submit" class="w-full p-[0.9rem] rounded-[1rem] bg-[#289245] border-0 text-white text-[1.6rem] font-inherit">Register</button>
         </div>
     </form>
 
