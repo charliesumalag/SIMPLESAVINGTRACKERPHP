@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use framework\Database;
 use framework\Validation;
+use framework\Session;
 
 class UserController
 {
@@ -16,7 +17,9 @@ class UserController
     }
 
     public function login()
+
     {
+
         loadView('login');
     }
     public function register()
@@ -94,6 +97,19 @@ class UserController
 
         $this->db->query('INSERT INTO users (first_name,last_name,email,password) VALUES (:firstname,:lastname,:email,:password)', $params);
 
+        //Get the new user ID
+        $userID = $this->db->conn->lastInsertId();
+
+        Session::set('user', [
+            'id' => $userID,
+            'firstname' => $firstname,
+            'lastname' => $lastname,
+            'email' => $email,
+        ]);
+
+        inspectAndDie(Session::get('user'));
+
+
         redirect('/');
     }
 
@@ -126,7 +142,6 @@ class UserController
 
         $user = $this->db->query('SELECT * FROM users WHERE email = :email', $params)->fetch();
 
-
         if (!$user) {
             $errors['email'] = 'Incorrect credentials';
             loadView('login', [
@@ -142,6 +157,41 @@ class UserController
             exit;
         }
 
-        redirect('/admindashboard');
+        //check user role
+        if ($user['role'] === 'admin') {
+            //set user session
+
+            Session::set('user', [
+                'id' => $user['id'],
+                'firstname' => $user['first_name'],
+                'lastname' => $user['last_name'],
+                'email' => $user['email'],
+            ]);
+            redirect('/admindashboard');
+        } else {
+            Session::set('user', [
+                'id' => $user['id'],
+                'firstname' => $user['first_name'],
+                'lastname' => $user['last_name'],
+                'email' => $user['email'],
+            ]);
+            redirect('/memberdashboard');
+        }
+    }
+
+
+    /**
+     * Logout a user and kill session
+     *
+     * @return void
+     */
+    public function logout()
+    {
+        Session::clearAll();
+
+        $params = session_get_cookie_params();
+        setcookie('PHPSESSID', '', time() - 86400, $params['path'], $params['domain']);
+
+        redirect('/');
     }
 }
