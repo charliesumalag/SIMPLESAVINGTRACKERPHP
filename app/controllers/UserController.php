@@ -106,10 +106,6 @@ class UserController
             'lastname' => $lastname,
             'email' => $email,
         ]);
-
-        inspectAndDie(Session::get('user'));
-
-
         redirect('/');
     }
 
@@ -188,7 +184,7 @@ class UserController
     public function logout()
     {
         Session::clearAll();
-
+        session_destroy();
         $params = session_get_cookie_params();
         setcookie('PHPSESSID', '', time() - 86400, $params['path'], $params['domain']);
 
