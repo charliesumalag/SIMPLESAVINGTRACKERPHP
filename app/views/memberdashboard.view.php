@@ -25,7 +25,7 @@ use framework\Session;
     </header>
     <!-- Main Content Area (Flex 1 to take remaining space) -->
     <div class="mt-[2rem] mx-[5px] px-[2rem] bg-white flex flex-col flex-1 py-[3rem] rounded-t-[3rem]">
-        <h2 class="mb-[1.6rem]">Saving History</h2>
+        <h2 class="mb-[1.6rem] font-bold text-[#444]">Saving History</h2>
         <ul class="flex flex-col gap-[1rem]">
             <li class="flex justify-between items-center">
                 <div class="flex items-center gap-[1rem]">

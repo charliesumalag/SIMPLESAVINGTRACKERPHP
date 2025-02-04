@@ -1,14 +1,10 @@
 <?= loadPartial('head') ?>
 <div class="l-main-container">
-    <header class="w-full h-[30vh] relative bg-[url('../images/grab.png')] bg-no-repeat bg-cover before:content-[''] before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-black before:opacity-50 before:z-[1]">
+    <header class="w-full h-[15vh] relative bg-[url('../images/grab.png')] bg-no-repeat bg-contain bg-center">
         <div class="absolute top-[25%] left-[3rem] w-[50%]">
-            <h1 class="relative z-[2] text-white text-center text-[3rem]">Rider Savings Tracker</h1>
+            <!-- <h1 class="relative z-[2] text-white text-center text-[3rem]">Rider Savings Tracker</h1> -->
         </div>
     </header>
-    <?php
-
-
-    ?>
     <form action="/auth/register" method="POST" class="mt-[2rem] p-[1rem] flex flex-col gap-[2rem]" autocomplete="off">
         <div class="w-full relative">
             <i class="fa-solid fa-user absolute text-[#999] top-[50%] left-[1.4rem] -translate-y-1/2"></i>

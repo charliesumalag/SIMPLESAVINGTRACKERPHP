@@ -8,3 +8,4 @@ $router->get('/memberdashboard', 'DashboardController@member');
 $router->post('/auth/login', 'UserController@authenticate');
 $router->post('/auth/register', 'UserController@store');
 $router->post('/auth/logout', 'UserController@logout');
+$router->get('/adminaccount', 'DashboardController@adminaccount');

@@ -13,6 +13,10 @@ class DashboardController
         }
         loadView('admindashboard');
     }
+    public function adminaccount()
+    {
+        loadView('account');
+    }
 
     public function member()
     {
