@@ -25,4 +25,13 @@ class DashboardController
         }
         loadView('memberdashboard');
     }
+
+    public function adminsavings()
+    {
+        loadView('savings');
+    }
+    public function adminloans()
+    {
+        loadView('loan');
+    }
 }

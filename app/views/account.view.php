@@ -59,12 +59,16 @@ use framework\Session;
     </div>
     <div class="h-[5rem] w-full bg-white py-[3rem] px-[5rem] gap-[1.6rem] flex justify-between fixed bottom-0 left-0 items-center">
         <div class="w-[2.5rem] flex flex-col items-center gap-2">
-            <img src="../images/wallet.png" alt="" class="w-full opacity-50">
-            <p class="text-[1rem] text-[#555]">Saving</p>
+            <a href="/adminsavings">
+                <img src="../images/wallet.png" alt="" class="w-full opacity-50">
+                <p class="text-[1rem] text-[#555]">Saving</p>
+            </a>
         </div>
         <div class="w-[2.5rem] flex flex-col items-center gap-2">
-            <img src="../images/loan.png" alt="" class="w-full opacity-50">
-            <p class="text-[1rem] text-[#555]">Loan</p>
+            <a href="/adminloans">
+                <img src="../images/loan.png" alt="" class="w-full opacity-50">
+                <p class="text-[1rem] text-[#555]">Loan</p>
+            </a>
         </div>
         <div class="w-[2.5rem] flex flex-col items-center gap-2">
             <a href="/admindashboard">
