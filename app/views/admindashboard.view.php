@@ -1,6 +1,7 @@
 <?php
 
 use framework\Session;
+
 ?>
 
 <?= loadPartial('head') ?>
@@ -24,85 +25,40 @@ use framework\Session;
 
             <div class="bg-[url('../images/bank.png')] w-full bg-cover bg-center bg-no-repeat rounded-2xl p-16 relative overflow-hidden">
                 <div class="flex justify-center  gap-[0.5rem]">
-                    <p class="text-white text-[3rem] font-normal text-center scale-y-125"> 1,050</p>
+                    <p class="text-white text-[3rem] font-normal text-center scale-y-125"><?= number_format($savingsTotal, 0)  ?></p>
                 </div>
 
-                <p class="text-white text-center text-[1.2rem] font-extralight">Savings Balance</p>
+                <p class="text-white text-center text-[1.2rem] font-extralight">Total Savings Balance</p>
             </div>
         </header>
         <!-- Main Content Area (Flex 1 to take remaining space) -->
         <div class="mt-[2rem] mx-[5px] px-[2rem] bg-white flex flex-col flex-1 py-[3rem] rounded-2xl">
             <div class="flex justify-between mb-[1.6rem] ">
                 <h2 class="font-normal text-[#555] text-[1.6rem]  tracking-tight">Saving History</h2>
-                <a href="#" class="text-[1.4rem] text-[#289245] border-b-[1px] border-green-300">See all</a>
+                <a href="/adminsavings" class="text-[1.4rem] text-[#289245] border-b-[1px] border-green-300">See all</a>
 
             </div>
             <hr class="mb-[2rem]">
             <ul class="flex flex-col gap-[14px]">
-                <li class="flex justify-between items-center">
-                    <div class="flex items-center gap-[1rem]">
-                        <div class="w-[3rem] overflow-hidden">
-                            <img src="../images/profile.png" alt="" class="rounded-full w-full h-full">
-                        </div>
+                <?php foreach ($savings as $saving) : ?>
+                    <li class="flex justify-between items-center">
+                        <div class="flex items-center gap-[1rem]">
+                            <div class="w-[3rem] overflow-hidden">
+                                <img src="../images/profile.png" alt="" class="rounded-full w-full h-full">
+                            </div>
 
-                        <div>
-                            <p class="text-[#555] text-[1.3rem]">Jodiel</p>
-                            <p class="text-[1rem] text-[#888]">10-12-25</p>
+                            <div>
+                                <p class="text-[#555] text-[1.3rem]"><?= $saving['first_name'] ?></p>
+                                <p class="text-[1rem] text-[#888]"><?= date('Y-m-d', strtotime($saving['date_added']))   ?></p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="">
-                        <p class="text-[1.4rem] text-[#555]"><span class="text-[1rem]">PHP</span> 500.00</p>
-                    </div>
-                </li>
-                <hr>
-                <li class="flex justify-between items-center">
-                    <div class="flex items-center gap-[1rem]">
-                        <div class="w-[3rem] overflow-hidden">
-                            <img src="../images/profile.png" alt="" class="rounded-full w-full h-full">
+                        <div class="">
+                            <p class="text-[1.4rem] text-[#555]"><span class="text-[1rem]">PHP</span><?= $saving['amount'] ?> </p>
                         </div>
+                    </li>
+                    <hr>
+                <?php endforeach; ?>
 
-                        <div>
-                            <p class="text-[#555] text-[1.3rem]">Charlie</p>
-                            <p class="text-[1rem] text-[#888]">10-12-25</p>
-                        </div>
-                    </div>
-                    <div class="">
-                        <p class="text-[1.4rem] text-[#555]"><span class="text-[1rem]">PHP</span> 50.00</p>
-                    </div>
-                </li>
-                <hr>
-                <li class="flex justify-between items-center">
-                    <div class="flex items-center gap-[1rem]">
-                        <div class="w-[3rem] overflow-hidden">
-                            <img src="../images/profile.png" alt="" class="rounded-full w-full h-full">
-                        </div>
-
-                        <div>
-                            <p class="text-[#555] text-[1.3rem]">Chris</p>
-                            <p class="text-[1rem] text-[#888]">10-23-25</p>
-                        </div>
-                    </div>
-                    <div class="">
-                        <p class="text-[1.4rem] text-[#555]"><span class="text-[1rem]">PHP</span> 50.00</p>
-                    </div>
-                </li>
-                <hr>
-                <li class="flex justify-between items-center">
-                    <div class="flex items-center gap-[1rem]">
-                        <div class="w-[3rem] overflow-hidden">
-                            <img src="../images/profile.png" alt="" class="rounded-full w-full h-full">
-                        </div>
-
-                        <div>
-                            <p class="text-[#555] text-[1.3rem]">Jhez</p>
-                            <p class="text-[1rem] text-[#888]">10-22-25</p>
-                        </div>
-                    </div>
-                    <div class="">
-                        <p class="text-[1.4rem] text-[#555]"><span class="text-[1rem]">PHP</span> 100.00</p>
-                    </div>
-                </li>
-                <hr>
 
             </ul>
         </div>

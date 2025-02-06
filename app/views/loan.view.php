@@ -9,7 +9,7 @@ $emptysavings = true;
 
 
 <div class="h-screen flex flex-col">
-    <header class="  flex flex-col font-inherit bg-white">
+    <header class="  flex flex-col font-inherit bg-white pt-[1.6rem]">
         <div class="flex items-center w-full  h-[3rem] p-[1rem]">
             <i class="fa-solid fa-chevron-left text-[1.2rem] pl-[1rem]"></i>
             <h2 class="flex-1 text-center font-medium text-[1.8rem]">Loan</h2>
@@ -21,7 +21,7 @@ $emptysavings = true;
         </div>
         <div>
 
-            <p class="text-[1.4rem] text-[#888]">Loan services is not available for now</p>
+            <p class="text-[1.4rem] text-[#888]">Loan services are temporarily unavailable</p>
         </div>
     </div>
     <div class="h-[5rem] w-full bg-white py-[3rem] px-[5rem] gap-[1.6rem] flex justify-between fixed bottom-0 left-0 items-center">
