@@ -10,4 +10,5 @@ $router->post('/auth/register', 'UserController@store');
 $router->post('/auth/logout', 'UserController@logout');
 $router->get('/adminaccount', 'DashboardController@adminaccount');
 $router->get('/adminsavings', 'DashboardController@adminsavings');
+$router->get('/addsaving', 'SavingsController@addSaving');
 $router->get('/adminloans', 'DashboardController@adminloans');

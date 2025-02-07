@@ -6,16 +6,16 @@ use framework\Session;
 <?= loadPartial('head') ?>
 
 <div class="h-screen flex flex-col w-full overflow-y-auto bg-white">
-    <header class="flex flex-col font-inherit bg-white pt-[1.6rem]">
+    <header class="flex flex-col font-inherit bg-white py-[1.6rem]">
         <div class="flex items-center w-full  h-[3rem] p-[1rem]">
             <i class="fa-solid fa-chevron-left text-[1.2rem] pl-[1rem]"></i>
             <h2 class="flex-1 text-center font-medium text-[1.8rem]">Savings</h2>
         </div>
     </header>
 
-    <div class="flex-1">
+    <div class="flex-1 relative bg-[#f7f7f7] p-[1.6rem]">
         <?php if (empty($savings)): ?>
-            <div class="px-[2rem] bg-white flex flex-col items-center justify-center gap-[2rem] py-[3rem] rounded-2xl">
+            <div class="px-[2rem]  bg-white flex flex-col items-center justify-center gap-[2rem] py-[3rem] rounded-2xl">
                 <div class="w-full flex items-center justify-center">
                     <img src="../images/piggybank.png" class="w-[10rem]" alt="">
                 </div>
@@ -28,9 +28,9 @@ use framework\Session;
                 </div>
             </div>
         <?php else: ?>
-            <ul class="bg-white flex flex-col gap-[14px] p-[2rem] pb-[6rem]">
+            <ul class="bg-white flex flex-col  bg-[#f7f7f7]">
                 <?php foreach ($savings as $saving): ?>
-                    <li class="flex justify-between items-center">
+                    <li class="flex justify-between p-[1rem] items-center bg-white rounded-[0.8rem] mb-[1rem]">
                         <div class="flex items-center gap-[1rem]">
                             <div class="w-[3rem]">
                                 <img src="../images/profile.png" alt="" class="rounded-full w-full h-full">
@@ -44,10 +44,14 @@ use framework\Session;
                             <p class="text-[1.4rem] text-[#555]"><span class="text-[1rem]">PHP</span> <?= number_format($saving['amount'], 2) ?></p>
                         </div>
                     </li>
-                    <hr>
                 <?php endforeach; ?>
             </ul>
         <?php endif; ?>
+        <a href="/addsaving">
+            <div class="fixed bottom-[6rem] right-[1rem] p-[1rem] w-[5rem] h-[5rem] text-white  rounded-[100%] bg-[#289245] flex flex-col items-center justify-center opacity-90">
+                <button class="text-[1.8rem] font-bold">+</button>
+            </div>
+        </a>
     </div>
 
     <!-- Footer: Always present at the bottom -->
