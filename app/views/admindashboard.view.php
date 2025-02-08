@@ -70,7 +70,7 @@ use framework\Session;
                 <p class="text-[1rem] text-[#555]">Saving</p>
             </a>
         </div>
-        <div class="w-[2.5rem] flex flex-col items-center gap-2">
+        <div class="w-[3rem] flex flex-col items-center gap-2">
             <a href="/adminloans">
                 <img src="../images/loan.png" alt="" class="w-full opacity-50">
                 <p class="text-[1rem] text-[#555]">Loan</p>
@@ -81,8 +81,10 @@ use framework\Session;
             <p class="text-[1rem] text-[#289245]">Home</p>
         </div>
         <div class="w-[2.5rem] flex flex-col items-center gap-2">
-            <img src="../images/member.png" alt="" class="w-full opacity-50">
-            <p class="text-[1rem] text-[#555]">Member</p>
+            <a href="/members">
+                <img src="../images/member.png" alt="" class="w-full opacity-50">
+                <p class="text-[1rem] text-[#555]">Member</p>
+            </a>
         </div>
 
         <div class="">

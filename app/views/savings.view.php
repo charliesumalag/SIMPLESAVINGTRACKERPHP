@@ -28,10 +28,10 @@ use framework\Session;
                 </div>
             </div>
         <?php else: ?>
-            <ul class="bg-white flex flex-col  bg-[#f7f7f7]">
+            <ul class="bg-white flex flex-col gap-[1rem]  bg-[#f6f6f6]">
                 <?php foreach ($savings as $saving): ?>
-                    <li class="flex justify-between p-[1rem] items-center bg-white rounded-[0.8rem] mb-[1rem]">
-                        <div class="flex items-center gap-[1rem]">
+                    <li class="flex p-[1rem] items-center bg-[#f7f7f7] rounded-[0.8rem] bg-white mb-[1rem]">
+                        <div class="flex flex-1 items-center gap-[1rem]">
                             <div class="w-[3rem]">
                                 <img src="../images/profile.png" alt="" class="rounded-full w-full h-full">
                             </div>
@@ -40,8 +40,20 @@ use framework\Session;
                                 <p class="text-[1rem] text-[#888]"><?= date('Y-m-d', strtotime($saving['date_added'])) ?></p>
                             </div>
                         </div>
-                        <div>
+                        <div class="mr-[1rem]">
                             <p class="text-[1.4rem] text-[#555]"><span class="text-[1rem]">PHP</span> <?= number_format($saving['amount'], 2) ?></p>
+                        </div>
+                        <div>
+                            <a href="#" class="dotsBtn">
+                                <img src="../images/dots.png" class="w-[1.6rem] opacity-50 cursor-pointer" alt="">
+                            </a>
+
+                            <div class="dropdownMenu absolute right-[2rem] mt-2 w-24 bg-white border rounded-lg shadow-lg hidden">
+                                <ul class="text-[1.2rem]">
+                                    <li><a href="#" class="block px-3 py-2 hover:bg-gray-100">Edit</a></li>
+                                    <li><a href="#" class="block px-3 py-2 text-red-600 hover:bg-gray-100">Delete</a></li>
+                                </ul>
+                            </div>
                         </div>
                     </li>
                 <?php endforeach; ?>
@@ -62,7 +74,7 @@ use framework\Session;
                 <p class="text-[1rem] text-[#289245]">Saving</p>
             </a>
         </div>
-        <div class="w-[2.5rem] flex flex-col items-center gap-2">
+        <div class="w-[3rem] flex flex-col items-center gap-2">
             <a href="/adminloans">
                 <img src="../images/loan.png" alt="" class="w-full opacity-50">
                 <p class="text-[1rem] text-[#555]">Loan</p>
@@ -75,8 +87,10 @@ use framework\Session;
             </a>
         </div>
         <div class="w-[2.5rem] flex flex-col items-center gap-2">
-            <img src="../images/member.png" alt="" class="w-full opacity-50">
-            <p class="text-[1rem] text-[#555]">Member</p>
+            <a href="/members">
+                <img src="../images/member.png" alt="" class="w-full opacity-50">
+                <p class="text-[1rem] text-[#555]">Member</p>
+            </a>
         </div>
         <div>
             <a href="/adminaccount" class="w-[2.5rem] flex flex-col items-center gap-2 text-[1rem] text-[#555]">
@@ -86,5 +100,34 @@ use framework\Session;
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll(".dotsBtn").forEach((btn) => {
+            btn.addEventListener("click", function(event) {
+                event.preventDefault(); // Prevent default action
+
+                let dropdown = this.nextElementSibling; // Selects the corresponding dropdown menu
+                dropdown.classList.toggle("hidden");
+
+                // Close other dropdowns when one is opened
+                document.querySelectorAll(".dropdownMenu").forEach((menu) => {
+                    if (menu !== dropdown) {
+                        menu.classList.add("hidden");
+                    }
+                });
+            });
+        });
+
+        // Click outside to close all dropdowns
+        document.addEventListener("click", function(event) {
+            document.querySelectorAll(".dropdownMenu").forEach((menu) => {
+                if (!menu.contains(event.target) && !event.target.closest(".dotsBtn")) {
+                    menu.classList.add("hidden");
+                }
+            });
+        });
+    });
+</script>
 
 <?= loadPartial('footer'); ?>

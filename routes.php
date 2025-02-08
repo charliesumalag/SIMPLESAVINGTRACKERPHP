@@ -12,3 +12,4 @@ $router->get('/adminaccount', 'DashboardController@adminaccount');
 $router->get('/adminsavings', 'DashboardController@adminsavings');
 $router->get('/addsaving', 'SavingsController@addSaving');
 $router->get('/adminloans', 'DashboardController@adminloans');
+$router->get('/members', 'MembersController@index');
