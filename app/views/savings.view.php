@@ -13,7 +13,7 @@ use framework\Session;
         </div>
     </header>
 
-    <div class="flex-1 relative bg-[#f7f7f7] p-[1.6rem]">
+    <div class="flex-1 relative bg-[#f7f7f7] saving">
         <?php if (empty($savings)): ?>
             <div class="px-[2rem]  bg-white flex flex-col items-center justify-center gap-[2rem] py-[3rem] rounded-2xl">
                 <div class="w-full flex items-center justify-center">
@@ -24,11 +24,11 @@ use framework\Session;
                     <p class="text-[1.4rem] text-[#888]">There are no savings yet</p>
                 </div>
                 <div>
-                    <button class="px-[3rem] font-light text-[1.4rem] py-[1rem] text-white bg-[#289245] rounded-[5rem]">Add Savings</button>
+                    <button class="px-[3rem] font-light text-[1.4rem] py-[1rem] text-white bg-[#289245] rounded-[5rem] ">Add Savings</button>
                 </div>
             </div>
         <?php else: ?>
-            <ul class="bg-white flex flex-col gap-[1rem]  bg-[#f6f6f6]">
+            <ul class=" p-[1.6rem] bg-white flex flex-col gap-[1rem] mt-[1rem] pb-[5rem]  bg-[#f6f6f6] ul h-[100%]">
                 <?php foreach ($savings as $saving): ?>
                     <li class="flex p-[1rem] items-center bg-[#f7f7f7] rounded-[0.8rem] bg-white mb-[1rem]">
                         <div class="flex flex-1 items-center gap-[1rem]">
@@ -36,12 +36,13 @@ use framework\Session;
                                 <img src="../images/profile.png" alt="" class="rounded-full w-full h-full">
                             </div>
                             <div>
-                                <p class="text-[#555] text-[1.3rem]"><?= htmlspecialchars($saving['first_name']) ?></p>
                                 <p class="text-[1rem] text-[#888]"><?= date('Y-m-d', strtotime($saving['date_added'])) ?></p>
+                                <p class="font-medium text-[#555] text-[1.4rem]"><?= htmlspecialchars($saving['first_name']) ?></p>
+
                             </div>
                         </div>
                         <div class="mr-[1rem]">
-                            <p class="text-[1.4rem] text-[#555]"><span class="text-[1rem]">PHP</span> <?= number_format($saving['amount'], 2) ?></p>
+                            <p class="text-[1.4rem] font-medium text-[#555]"><span class="text-[1rem] font-light">PHP</span> <?= number_format($saving['amount'], 2) ?></p>
                         </div>
                         <div>
                             <a href="#" class="dotsBtn">
@@ -56,18 +57,50 @@ use framework\Session;
                             </div>
                         </div>
                     </li>
+                    <hr>
                 <?php endforeach; ?>
+
             </ul>
+            <!-- //modal -->
+            <form class="absolute h-[70%] w-full bottom-0 fixed bg-white p-[30px] flex flex-col gap-[1.2rem] hidden modal z-50 overflow-hidden">
+
+                <div class="flex flex-col gap-[0.5rem]">
+                    <label for="" class="text-[1.5rem]">Select Member</label>
+                    <select name="" id="" class="p-[1rem] w-full outline-0 bg-[#fafafa] text-[#555] font-inherit rounded-[0.5rem]">
+                        <option value=""></option>
+                        <option value="">Charlie</option>
+                        <option value="">Jhez</option>
+                        <option value="">Jodiel</option>
+                        <option value="">Jonathan</option>
+                    </select>
+                </div>
+                <div class="flex flex-col gap-[0.5rem]">
+                    <label for="">Amount</label>
+                    <input type="text" class="p-[1rem] w-full outline-0 bg-[#fafafa] text-[#555]  font-inherit rounded-[0.5rem">
+                </div>
+                <div class="flex flex-col gap-[0.5rem]">
+                    <label for="">Date</label>
+                    <input type="date" class="p-[1rem] w-full outline-0 bg-[#fafafa] text-[#555]  font-inherit rounded-[0.5rem">
+                </div>
+                <div class="flex w-full gap-[1rem] mt-[2rem]">
+                    <button class="w-[50%] p-1rem bg-[#f3f3ff] text-[#289245] p-[0.8rem] rounded-[5rem] close-modal">Cancel</button>
+                    <button class=" w-[50%] p-1rem bg-[#289245] text-white p-[0.8rem] rounded-[5rem]">Add</button>
+                </div>
+            </form>
+            <!-- //end of modal -->
+            <div class="overlay hidden absolute w-full h-[100%]  inset-0 bg-black bg-opacity-60 backdrop-blur-sm z-40"></div>
         <?php endif; ?>
-        <a href="/addsaving">
-            <div class="fixed bottom-[6rem] right-[1rem] p-[1rem] w-[5rem] h-[5rem] text-white  rounded-[100%] bg-[#289245] flex flex-col items-center justify-center opacity-90">
-                <button class="text-[1.8rem] font-bold">+</button>
-            </div>
-        </a>
+
+        <div class="fixed bottom-[6rem] show-modal right-[1rem] p-[1rem] w-[5rem] h-[5rem] text-white  rounded-[100%] bg-[#289245] flex flex-col items-center justify-center opacity-90">
+            <button class="text-[1.8rem] font-bold">+</button>
+        </div>
+
+
+
     </div>
 
     <!-- Footer: Always present at the bottom -->
-    <div class="h-[5rem] w-full bg-white py-[3rem] px-[5rem] gap-[1.6rem] flex justify-between fixed bottom-0 left-0 items-center">
+    <div class="h-[5rem] w-full bg-white py-[3rem] px-[5rem] gap-[1.6rem] flex justify-between fixed bottom-0 left-0 items-center main-menus">
         <div class="w-[2.5rem] flex flex-col items-center gap-2">
             <a href="/adminsavings">
                 <img src="../images/walletactive.png" alt="" class="w-full opacity-50">
@@ -128,6 +161,40 @@ use framework\Session;
             });
         });
     });
+
+    const showModalEl = document.querySelector('.show-modal');
+    const modalFormEl = document.querySelector('.modal');
+    const overlayEl = document.querySelector('.overlay');
+    const savingList = document.querySelector('.saving');
+    const mainMenus = document.querySelector('.main-menus')
+    const closeModalEl = document.querySelector('.close-modal');
+
+    const openModal = () => {
+        savingList.classList.add('overflow-hidden');
+        mainMenus.classList.add('hidden');
+        modalFormEl.classList.remove('hidden');
+        overlayEl.classList.remove('hidden');
+        console.log('show modal clicked')
+    }
+    const closeModal = (e) => {
+        e.preventDefault();
+
+        savingList.classList.remove('overflow-hidden');
+        mainMenus.classList.remove('hidden');
+        modalFormEl.classList.add('hidden');
+        overlayEl.classList.add('hidden');
+
+        modalFormEl.querySelectorAll('input, select').forEach((field) => {
+            if (field.type === 'text' || field.type === 'date') {
+                field.value = ''; // Clear text & date inputs
+            } else if (field.tagName === 'SELECT') {
+                field.selectedIndex = 0; // Reset select fields
+            }
+        });
+
+    }
+    showModalEl.addEventListener('click', openModal);
+    closeModalEl.addEventListener('click', closeModal);
 </script>
 
 <?= loadPartial('footer'); ?>

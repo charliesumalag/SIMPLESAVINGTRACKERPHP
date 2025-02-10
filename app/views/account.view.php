@@ -24,6 +24,7 @@ use framework\Session;
                 <i class="fa-solid fa-chevron-right text-[1.4rem]"></i>
             </div>
         </header>
+
         <!-- Main Content Area (Flex 1 to take remaining space) -->
         <div class="mt-[2rem] mx-[5px] px-[2rem] bg-white flex flex-col flex-1 py-[3rem] rounded-2xl">
             <ul class="flex flex-col gap-[14px]">

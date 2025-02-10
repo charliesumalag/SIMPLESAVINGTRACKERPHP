@@ -12,6 +12,8 @@ use framework\Session;
             <h2 class="flex-1 text-center font-medium text-[1.8rem]">Add Savings</h2>
         </div>
     </header>
+
+    //modal
     <form class="flex-1 bg-white p-[40px] flex flex-col gap-[1.5rem]  ">
 
         <div class="flex flex-col gap-[0.5rem]">
@@ -73,5 +75,8 @@ use framework\Session;
     </div>
 </div>
 </div>
+<script>
+
+</script>
 
 <?= loadPartial('footer'); ?>
