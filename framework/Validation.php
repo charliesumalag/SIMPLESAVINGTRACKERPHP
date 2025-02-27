@@ -20,6 +20,12 @@ class Validation
         return filter_var($value, FILTER_VALIDATE_EMAIL);
     }
 
+    public static function number($value)
+    {
+        $value = trim($value);
+        return filter_var($value, FILTER_VALIDATE_INT);
+    }
+
     public static function match($value1, $value2)
     {
         $value1 = trim($value1);

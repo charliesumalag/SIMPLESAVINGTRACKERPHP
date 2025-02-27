@@ -77,8 +77,10 @@ use framework\Session;
             </a>
         </div>
         <div class="w-[2.5rem] flex flex-col items-center gap-2">
-            <img src="../images/homeactive.png" alt="" class="w-full opacity-100">
-            <p class="text-[1rem] text-[#289245]">Home</p>
+            <a href="/admindashboard">
+                <img src="../images/homeactive.png" alt="" class="w-full opacity-100">
+                <p class="text-[1rem] text-[#289245]">Home</p>
+            </a>
         </div>
         <div class="w-[2.5rem] flex flex-col items-center gap-2">
             <a href="/members">

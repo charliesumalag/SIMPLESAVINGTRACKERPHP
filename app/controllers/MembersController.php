@@ -20,4 +20,13 @@ class MembersController
     {
         loadView('members/index');
     }
+
+    public function memberloan()
+    {
+        loadView('memberloan');
+    }
+    public function memberaccount()
+    {
+        loadView('memberaccount');
+    }
 }

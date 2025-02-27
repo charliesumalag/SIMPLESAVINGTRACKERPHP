@@ -1,1 +1,19 @@
 npx tailwindcss -i ./public/css/tailwind.css -o ./public/css/style.css --watch
+
+
+ <?php if (!empty($message)): ?>
+        <div id="successMessage" class='text-green-500 text-center'>
+            <?= htmlspecialchars($message) ?>
+        </div>
+
+        <script>
+            setTimeout(() => {
+                let message = document.getElementById('successMessage');
+                if (message) {
+                    message.style.transition = "opacity 0.5s";
+                    message.style.opacity = "0";
+                    setTimeout(() => message.remove(), 500); // Remove after fade out
+                }
+            }, 3000); // Hide after 3 seconds
+        </script>
+    <?php endif; ?>

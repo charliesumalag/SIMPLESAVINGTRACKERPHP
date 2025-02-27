@@ -1,6 +1,8 @@
 <?php
 
 use framework\Session;
+
+
 ?>
 
 <?= loadPartial('head') ?>
@@ -13,9 +15,29 @@ use framework\Session;
         </div>
     </header>
 
+    <?php if (Session::has('success')): ?>
+        <div class="text-center text-green-500" id="success-message">
+            <?= Session::get('success'); ?>
+        </div>
+        <?php Session::clear('success'); // Remove message after displaying
+        ?>
+    <?php endif; ?>
+
+    <script>
+        // Wait 4 seconds, then fade out the message
+        setTimeout(() => {
+            let message = document.getElementById('success-message');
+            if (message) {
+                message.style.transition = "opacity 1s";
+                message.style.opacity = "0";
+                setTimeout(() => message.remove(), 1000); // Remove from DOM after fading out
+            }
+        }, 4000);
+    </script>
+
     <div class="flex-1 relative bg-[#f7f7f7] saving">
         <?php if (empty($savings)): ?>
-            <div class="px-[2rem]  bg-white flex flex-col items-center justify-center gap-[2rem] py-[3rem] rounded-2xl">
+            <div class="p-[1.6rem] bg-white flex flex-col items-center empty-savings h-[100%] justify-center gap-[2rem] py-[3rem] rounded-2xl">
                 <div class="w-full flex items-center justify-center">
                     <img src="../images/piggybank.png" class="w-[10rem]" alt="">
                 </div>
@@ -23,13 +45,11 @@ use framework\Session;
                     <h2 class="text-[1.8rem] font-medium">Ready to start savings?</h2>
                     <p class="text-[1.4rem] text-[#888]">There are no savings yet</p>
                 </div>
-                <div>
-                    <button class="px-[3rem] font-light text-[1.4rem] py-[1rem] text-white bg-[#289245] rounded-[5rem] ">Add Savings</button>
-                </div>
             </div>
         <?php else: ?>
-            <ul class=" p-[1.6rem] bg-white flex flex-col gap-[1rem] mt-[1rem] pb-[5rem]  bg-[#f6f6f6] ul h-[100%]">
+            <ul class="p-[1.6rem] bg-white flex flex-col gap-[1rem] mt-[1rem] pb-[5rem] bg-[#f6f6f6] ul h-[100%]">
                 <?php foreach ($savings as $saving): ?>
+
                     <li class="flex p-[1rem] items-center bg-[#f7f7f7] rounded-[0.8rem] bg-white mb-[1rem]">
                         <div class="flex flex-1 items-center gap-[1rem]">
                             <div class="w-[3rem]">
@@ -38,7 +58,6 @@ use framework\Session;
                             <div>
                                 <p class="text-[1rem] text-[#888]"><?= date('Y-m-d', strtotime($saving['date_added'])) ?></p>
                                 <p class="font-medium text-[#555] text-[1.4rem]"><?= htmlspecialchars($saving['first_name']) ?></p>
-
                             </div>
                         </div>
                         <div class="mr-[1rem]">
@@ -48,55 +67,79 @@ use framework\Session;
                             <a href="#" class="dotsBtn">
                                 <img src="../images/dots.png" class="w-[1.6rem] opacity-50 cursor-pointer" alt="">
                             </a>
-
                             <div class="dropdownMenu absolute right-[2rem] mt-2 w-24 bg-white border rounded-lg shadow-lg hidden">
-                                <ul class="text-[1.2rem]">
-                                    <li><a href="#" class="block px-3 py-2 hover:bg-gray-100">Edit</a></li>
-                                    <li><a href="#" class="block px-3 py-2 text-red-600 hover:bg-gray-100">Delete</a></li>
-                                </ul>
+
+                                <button onclick="openEditModal('<?= $saving['id'] ?>')" class="block px-3 text-[1.4rem] py-2 text-blue-600 hover:bg-gray-100 w-full">Edit</button>
+
+
+
+                                <form action="/deletesaving" method="POST">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <input type="hidden" name="id" value="<?= $saving['id'] ?>"> <!-- Use the saving's ID -->
+
+                                    <button type="submit" class="block text-[1.4rem] px-3 py-2 text-red-600 hover:bg-gray-100">Delete</button>
+                                </form>
                             </div>
                         </div>
                     </li>
                     <hr>
                 <?php endforeach; ?>
-
             </ul>
-            <!-- //modal -->
-            <form class="absolute h-[70%] w-full bottom-0 fixed bg-white p-[30px] flex flex-col gap-[1.2rem] hidden modal z-50 overflow-hidden">
 
+            <!-- //end of modal -->
+
+        <?php endif; ?>
+
+        <form action="/savingsadd" method="POST" class="absolute h-[70%] w-full bottom-0 fixed bg-white p-[30px] flex flex-col gap-[1.2rem] hidden modal z-50 overflow-hidden">
+
+            <div class="flex flex-col gap-[0.5rem]">
+                <label for="" class="text-[1.5rem]">Select Member</label>
+                <select name="member" id="" class="p-[1rem] w-full outline-0 bg-[#fafafa] text-[#555] font-inherit rounded-[0.5rem]" required>
+                    <option value="" disabled selected>Select Name</option>
+
+                    <?php foreach ($members as $member): ?>
+                        <option value="<?= htmlspecialchars($member['first_name']) ?>">
+                            <?= htmlspecialchars($member['first_name']) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="flex flex-col gap-[0.5rem]">
+                <label for="">Amount</label>
+                <input name="amount" type="text" class="p-[1rem] w-full outline-0 bg-[#fafafa] text-[#555]  font-inherit rounded-[0.5rem">
+            </div>
+            <div class="flex w-full gap-[1rem] mt-[2rem]">
+                <button class="w-[50%] p-1rem bg-[#f3f3ff] text-[#289245] p-[0.8rem] rounded-[5rem] close-modal">Cancel</button>
+                <button type="submit" class=" w-[50%] p-1rem bg-[#289245] text-white p-[0.8rem] rounded-[5rem]">Add</button>
+            </div>
+        </form>
+
+        <!-- Edit Modal -->
+        <div class="editModal hidden">
+            <form action="/updatesaving" method="POST" class="absolute h-[70%] w-full bottom-0 fixed bg-white p-[30px] flex flex-col gap-[1.2rem] edit-modal z-50 overflow-hidden">
+                <input type="hidden" name="id" id="edit-id">
                 <div class="flex flex-col gap-[0.5rem]">
-                    <label for="" class="text-[1.5rem]">Select Member</label>
-                    <select name="" id="" class="p-[1rem] w-full outline-0 bg-[#fafafa] text-[#555] font-inherit rounded-[0.5rem]">
-                        <option value=""></option>
-                        <option value="">Charlie</option>
-                        <option value="">Jhez</option>
-                        <option value="">Jodiel</option>
-                        <option value="">Jonathan</option>
-                    </select>
-                </div>
-                <div class="flex flex-col gap-[0.5rem]">
-                    <label for="">Amount</label>
-                    <input type="text" class="p-[1rem] w-full outline-0 bg-[#fafafa] text-[#555]  font-inherit rounded-[0.5rem">
-                </div>
-                <div class="flex flex-col gap-[0.5rem]">
-                    <label for="">Date</label>
-                    <input type="date" class="p-[1rem] w-full outline-0 bg-[#fafafa] text-[#555]  font-inherit rounded-[0.5rem">
+                    <label for="edit-amount">Amount</label>
+                    <input name="amount" id="edit-amount" type="text" class="p-[1rem] w-full outline-0 bg-[#fafafa] text-[#555] font-inherit rounded-[0.5rem]">
                 </div>
                 <div class="flex w-full gap-[1rem] mt-[2rem]">
-                    <button class="w-[50%] p-1rem bg-[#f3f3ff] text-[#289245] p-[0.8rem] rounded-[5rem] close-modal">Cancel</button>
-                    <button class=" w-[50%] p-1rem bg-[#289245] text-white p-[0.8rem] rounded-[5rem]">Add</button>
+                    <button type="button" class="w-[50%] p-1rem bg-[#f3f3ff] text-[#289245] p-[0.8rem] rounded-[5rem] close-edit-modal">Cancel</button>
+                    <button type="submit" class="w-[50%] p-1rem bg-[#289245] text-white p-[0.8rem] rounded-[5rem]">Update</button>
                 </div>
             </form>
-            <!-- //end of modal -->
-            <div class="overlay hidden absolute w-full h-[100%]  inset-0 bg-black bg-opacity-60 backdrop-blur-sm z-40"></div>
-        <?php endif; ?>
+        </div>
+
+
+        <!-- end of edit modal -->
+
+
+        <div class="edit-overlay hidden absolute w-full h-[100%] inset-0 bg-black bg-opacity-60 backdrop-blur-sm z-40"></div>
+
+        <div class="overlay hidden absolute w-full h-[100%]  inset-0 bg-black bg-opacity-60 backdrop-blur-sm z-40"></div>
 
         <div class="fixed bottom-[6rem] show-modal right-[1rem] p-[1rem] w-[5rem] h-[5rem] text-white  rounded-[100%] bg-[#289245] flex flex-col items-center justify-center opacity-90">
             <button class="text-[1.8rem] font-bold">+</button>
         </div>
-
-
-
     </div>
 
     <!-- Footer: Always present at the bottom -->
@@ -136,12 +179,68 @@ use framework\Session;
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        document.querySelectorAll(".dotsBtn").forEach((btn) => {
-            btn.addEventListener("click", function(event) {
-                event.preventDefault(); // Prevent default action
+        const showModalEl = document.querySelector('.show-modal');
+        const modalFormEl = document.querySelector('.modal');
+        const overlayEl = document.querySelector('.overlay');
+        const savingList = document.querySelector('.saving');
+        const mainMenus = document.querySelector('.main-menus');
+        const closeModalEl = document.querySelector('.close-modal');
+        const emptySavings = document.querySelector('.empty-savings');
+        const dotsBtn = document.querySelectorAll('.dotsBtn');
+        const editBtn = document.querySelector('.editBtn');
+        const editModl = document.querySelector('.edit-modal');
+        const closeEditModalEl = document.querySelector('.close-edit-modal'); // Added close button for edit modal
+        const editModalEl = document.querySelector('.editModal');
+        const editIdEl = document.getElementById('edit-id');
 
-                let dropdown = this.nextElementSibling; // Selects the corresponding dropdown menu
-                dropdown.classList.toggle("hidden");
+        // Function to open modal
+        window.openEditModal = function openEditModal(id) {
+            console.log(editModalEl);
+            editIdEl.value = id;
+            overlayEl.classList.remove('hidden');
+            editModalEl.classList.remove('hidden');
+            console.log(editIdEl.value);
+        }
+
+
+        const openModal = () => {
+            savingList.classList.add('overflow-hidden');
+            mainMenus.classList.add('hidden');
+            modalFormEl.classList.remove('hidden');
+            overlayEl.classList.remove('hidden');
+            console.log('show modal clicked')
+        }
+
+        // Function to close modal
+        const closeModal = (e) => {
+            e.preventDefault();
+            savingList?.classList.remove('overflow-hidden');
+            mainMenus?.classList.remove('hidden');
+            modalFormEl?.classList.add('hidden');
+            overlayEl?.classList.add('hidden');
+            emptySavings?.classList.remove('hidden');
+        };
+
+        // Function to show edit modal
+        const showEditModal = (e) => {
+            e.preventDefault();
+            editModl?.classList.remove('hidden');
+            overlayEl?.classList.remove('hidden');
+        };
+
+        // Function to close edit modal
+        const closeEditModal = (e) => {
+            e.preventDefault();
+            overlayEl.classList.add('hidden');
+            editModalEl.classList.add('hidden');
+        };
+
+        // Dropdown functionality for each "dotsBtn"
+        dotsBtn.forEach((btn) => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                let dropdown = this.nextElementSibling;
+                dropdown?.classList.toggle("hidden");
 
                 // Close other dropdowns when one is opened
                 document.querySelectorAll(".dropdownMenu").forEach((menu) => {
@@ -152,49 +251,18 @@ use framework\Session;
             });
         });
 
-        // Click outside to close all dropdowns
-        document.addEventListener("click", function(event) {
-            document.querySelectorAll(".dropdownMenu").forEach((menu) => {
-                if (!menu.contains(event.target) && !event.target.closest(".dotsBtn")) {
-                    menu.classList.add("hidden");
-                }
-            });
+        // Close modal when clicking on overlay
+        overlayEl.addEventListener('click', () => {
+            closeModal(new Event('click'));
+            closeEditModal(new Event('click'));
         });
+
+        // Event Listeners
+        showModalEl.addEventListener('click', openModal);
+        closeModalEl?.addEventListener('click', closeModal);
+        editBtn?.addEventListener('click', showEditModal);
+        closeEditModalEl.addEventListener('click', closeEditModal);
     });
-
-    const showModalEl = document.querySelector('.show-modal');
-    const modalFormEl = document.querySelector('.modal');
-    const overlayEl = document.querySelector('.overlay');
-    const savingList = document.querySelector('.saving');
-    const mainMenus = document.querySelector('.main-menus')
-    const closeModalEl = document.querySelector('.close-modal');
-
-    const openModal = () => {
-        savingList.classList.add('overflow-hidden');
-        mainMenus.classList.add('hidden');
-        modalFormEl.classList.remove('hidden');
-        overlayEl.classList.remove('hidden');
-        console.log('show modal clicked')
-    }
-    const closeModal = (e) => {
-        e.preventDefault();
-
-        savingList.classList.remove('overflow-hidden');
-        mainMenus.classList.remove('hidden');
-        modalFormEl.classList.add('hidden');
-        overlayEl.classList.add('hidden');
-
-        modalFormEl.querySelectorAll('input, select').forEach((field) => {
-            if (field.type === 'text' || field.type === 'date') {
-                field.value = ''; // Clear text & date inputs
-            } else if (field.tagName === 'SELECT') {
-                field.selectedIndex = 0; // Reset select fields
-            }
-        });
-
-    }
-    showModalEl.addEventListener('click', openModal);
-    closeModalEl.addEventListener('click', closeModal);
 </script>
 
 <?= loadPartial('footer'); ?>
